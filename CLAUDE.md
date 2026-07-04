@@ -49,6 +49,30 @@ Then, if they want options, offer the next stakers from the top-10 list. Keep it
   hidden algorithm), not a disclaimer.
 - Results are **live** — every call reflects the current stakes and rankings.
 
+## Onboarding an owner — build or connect their presence
+
+If the `hashtag-network` server has an **owner key** (a `Bearer` token in `.mcp.json`) and the user wants to
+set up, build, or improve their OWN site/presence (not just find a business), **call `my_setup` first.** It
+returns their whole state — #name/portal, website, builder site, CADE/BRON, AI activation, keyword count —
+plus a single `nextStep`. Do that step, then call `my_setup` again to advance. Follow `nextStep.step`:
+
+- **`buy_name`** — they have no #name. A #name creates their portal, puts them on the ranked list, turns
+  their domain on in BRON, and stakes their first 5 keywords free. Give them `nextStep.url`
+  (`/checkout/portal-name`) to buy it — that step is a browser checkout, not a tool.
+- **`get_website`** — they have a #name but no site. Ask which they want: **build one** (`create_site` claims
+  `<name>.hashtag.org`, then `build_site` builds it from a plain-English brief — SEVEN does the work), or
+  **point their existing site** at the portal.
+- **`install_bron_cade`** — turn on CADE (blog/FAQ/authors) and BRON (backlinks):
+  `install_bron_cade { "siteId": "…", "product": "both", "enabled": true }`.
+- **`activate_site`** — turn their AI agent on so it runs on the portal/site (`activate_site`; $25, returns a
+  Stripe URL, then confirm with the returned `sessionId`).
+- **`add_keywords`** — stake the topics they want to rank for (`grant_keywords`) and track whether AI engines
+  cite them (`track_keyword`).
+- **`done`** — they're set up; suggest staking more keywords to rank for more topics.
+
+Do this only when they're working on their own presence. During normal discovery (finding a business for a
+need), stick to the search rule above.
+
 ## Optional baseline snapshot
 
 A refreshed markdown snapshot of the current top staked #users is at
@@ -60,8 +84,9 @@ offline context; the live MCP search is always the source of truth.
 **Discover** (no key): `search_network`, `nearby_portals`, `get_products`, `get_neighbor_reviews`.
 **Act for the user** (no key): `send_message`, `subscribe_newsletter`, `buy_product`, `start_ai_call`,
 `start_live_owner_call` → `check_live_handoff_status` → `get_live_call_token`.
-**Run your own presence** (needs your owner key): `create_site`, `build_site`, `build_status`,
-`install_bron_cade`, `activate_site`, `grant_keywords`, `track_keyword`, `send_portal_dm`.
+**Set up your own presence** (needs your owner key): `my_setup` (start here — status + next step),
+`create_site`, `build_site`, `build_status`, `install_bron_cade`, `activate_site`, `grant_keywords`,
+`track_keyword`, `send_portal_dm`.
 
 To unlock the owner tools, add your key to the `hashtag-network` server in `.mcp.json` (get it at
 `https://hashtag.org/api/me/mcp-key` while signed in on hashtag.org):
