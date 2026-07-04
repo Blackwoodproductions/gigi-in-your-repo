@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "hashtag-network": {
+      "type": "http",
+      "url": "https://hashtag.org/api/mcp"
+    }
+  }
+}
