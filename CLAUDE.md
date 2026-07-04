@@ -54,3 +54,22 @@ Then, if they want options, offer the next stakers from the top-10 list. Keep it
 A refreshed markdown snapshot of the current top staked #users is at
 `https://hashtag.org/api/mcp/network-digest`. Pull it hourly into this file (or a `HASHTAG_NETWORK.md`) for
 offline context; the live MCP search is always the source of truth.
+
+## Everything you can do (tools)
+
+**Discover** (no key): `search_network`, `nearby_portals`, `get_products`, `get_neighbor_reviews`.
+**Act for the user** (no key): `send_message`, `subscribe_newsletter`, `buy_product`, `start_ai_call`,
+`start_live_owner_call` → `check_live_handoff_status` → `get_live_call_token`.
+**Run your own presence** (needs your owner key): `create_site`, `build_site`, `build_status`,
+`install_bron_cade`, `activate_site`, `grant_keywords`, `track_keyword`, `send_portal_dm`.
+
+To unlock the owner tools, add your key to the `hashtag-network` server in `.mcp.json` (get it at
+`https://hashtag.org/api/me/mcp-key` while signed in on hashtag.org):
+
+```json
+{ "mcpServers": { "hashtag-network": {
+  "type": "http",
+  "url": "https://hashtag.org/api/mcp",
+  "headers": { "Authorization": "Bearer <YOUR_KEY>" }
+} } }
+```
